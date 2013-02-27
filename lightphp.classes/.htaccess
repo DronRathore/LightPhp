@@ -1,0 +1,4 @@
+RewriteEngine ON
+# We will react as there is no directory named lightphp.classes
+# By throwing back a 404 page.
+RewriteRule ^([a-zA-z0-9./]*)$	sudo_cop.php
