@@ -31,13 +31,10 @@ class Login{
 	}
 	private function pushErrors($error_text=""){
 		if(empty($error_text))
-			echo "<b>Login Failure:</b> You should provide all the inputs.";
+			pushError("<b>Login Failure:</b> You should provide all the inputs.");
 		else
-			echo "<b>Login Failure:</b>".$error_text;
+			pushError("<b>Login Failure:</b>".$error_text);
 	
-	}
-	public function out(){
-	echo $this->_username;
 	}
 }
 ?>

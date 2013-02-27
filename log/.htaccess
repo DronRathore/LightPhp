@@ -1,0 +1,3 @@
+RewriteEngine On
+# We dont want anyone to view this through web
+RewriteRule ^([a-zA-z0-9./]*)$	foo.php?$1

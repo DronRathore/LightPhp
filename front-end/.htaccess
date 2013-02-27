@@ -1,0 +1,3 @@
+# The redirection rule to cater the static content
+RewriteEngine On
+RewriteRule ^([a-zA-Z0-9./-]*)$	r.php?$1

@@ -4,34 +4,71 @@
 	import("Database");
 */
 class Database{
-	private $_db_name,$_table_name,$_connection;
-	public function __construct($db_name="",$table_name=""){
-		$this->_connect();
-		$this->_db_name=$db_name;
-		$this->_table_name=$table_name;
+	private $_db_name,$_connection,$_username,$_password,$_host,$_result,_isInit;
+	public function __construct($db_name=""){
+		$this->_username=DB_USER_NAME;
+		$this->_password=DB_PASSWORD;
+		$this->_host="localhost";
 		
+		if($this->connect())
+			$this->_isInit=true;
+		else
+			$this->_isInit=false;
+		$this->_db_name=$db_name;
 	}
-	public function switchDatabase($db_name=""){
-			$this->_db_name=strlen($db_name)>0?$db_name:$this->_db_name;
+	public function selectDatabase($db_name=""){
+		$this->_db_name=strlen($db_name)>0?$db_name:$this->_db_name;
+		mysql_select_db($this->_db_name,$this->_connection);
 	}
-	public function switchTable($table_name=""){
-		$this->_table_name=strlen($table_name)>0?$table_name:$this->_table_name;
+	public function switchUser($username,$password=""){
+		$this->_username=$username;
+		$this->_password=$password;
 	}
-	private function _connect(){
+	public function switchHost($host){
+		$this->_host=$host;
+	}
+	public function connect(){
 		try{
 			ob_clean();
-			$this->_connection=mysql_connect("localhost",DB_USER_NAME,DB_PASSWORD);
+			$this->_connection=mysql_connect($this->_host,$this->_username,$this->_password);
 			ob_end_clean();
 			if(!($this->_connection))
 				throw new Exception();
+			else
+				return true;
 		}catch(Exception $e){
-			$this->_pushError("MySQL Login Failure: Check the LightPHP config.php file and correct the DB_USER_NAME and DB_PASSWORD.");
-			LightPHP_Error_Log("MySQL Login Failure: Check the LightPHP config.php file and correct the DB_USER_NAME and DB_PASSWORD.".$e."\r\n");
+			LightPHP_Error_Log("MySQL Login Failure: ".$e."\r\n");
+			pushError("An Internal Server Error Occured, please try again.");
+			return false;
 		}
 	}
-	private function _pushError($error_string=""){
-		//if(strlen($error_string)>0)
-			//$GLOBALS["Errors"]
+	public function executeScalar($query){
+		try{
+			ob_clean();
+			$result=mysql_query($query,$this->_connection);
+			ob_end_clean();
+			if(!$result)
+				throw new Exception();
+			else
+				return true;
+		}catch(Exception $e){
+			LightPHP_Error_Log("Error in your Query. ".mysql_error($this->_connection).$e."\r\n");
+			return false;
+		}
+	}
+	public function query($query,$isarr=false){
+		try{
+			ob_clean();
+			$_result=mysql_query($query);
+			ob_end_clean();
+			if($result){
+				$_result=!($isarr)?mysql_fetch_assoc($_result):mysql_fetch_array($_result);
+				return $_result;
+			}
+			throw new Exception();
+		}catch(Exception $e){
+			LightPHP_Error_Log("Error in your Query. ".mysql_error($this->_connection).$e."\r\n");
+		}
 		
 	}
 }
