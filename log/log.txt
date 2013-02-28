@@ -3,13 +3,3 @@ Stack trace:
 #0 E:\Web\xampp\htdocs\LightPhp\lightphp.classes\Database.php(12): Database->connect()
 #1 E:\Web\xampp\htdocs\LightPhp\login.php(5): Database->__construct()
 #2 {main}
-27-02-13 04:21 MySQL Login Failure: exception 'Exception' in E:\Web\xampp\htdocs\LightPhp\lightphp.classes\Database.php:33
-Stack trace:
-#0 E:\Web\xampp\htdocs\LightPhp\lightphp.classes\Database.php(12): Database->connect()
-#1 E:\Web\xampp\htdocs\LightPhp\login.php(5): Database->__construct()
-#2 {main}
-27-02-13 04:14 MySQL Login Failure: exception 'Exception' in E:\Web\xampp\htdocs\LightPhp\lightphp.classes\Database.php:33
-Stack trace:
-#0 E:\Web\xampp\htdocs\LightPhp\lightphp.classes\Database.php(12): Database->connect()
-#1 E:\Web\xampp\htdocs\LightPhp\login.php(5): Database->__construct()
-#2 {main}
